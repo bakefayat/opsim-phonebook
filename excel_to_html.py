@@ -37,7 +37,9 @@ def write_to_html(rows):
     with open('output.html', 'w', encoding='utf-8') as f:
         f.write(rows)
         print('Done! now use output.html file')
-
-zip_obj = excel_to_zip()
-inn_html = zip_into_html(zip_obj)
-write_to_html(inn_html)
+try:
+    zip_obj = excel_to_zip()
+    inn_html = zip_into_html(zip_obj)
+    write_to_html(inn_html)
+except FileNotFoundError:
+    print('ERR: phones.xlsx file not found.')
