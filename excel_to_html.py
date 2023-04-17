@@ -23,20 +23,31 @@ def excel_to_zip():
     info = zip(units, positions, names, phones)
     return info
 
+
 def zip_into_html(zipped):
     html_rows = ''
     # Iterate through the zip object
     for unit, position, name, phone in zipped:
         # Generate HTML table row
-        html_row = f"<tr>\n\t<td>{unit}</td>\n\t<td>{position}</td>\n\t<td>{name}</td>\n\t<td>{phone}</td>\n</tr>\n"
+        html_row = (
+            f"<tr>\n"
+            f"\t<td>{unit}</td>\n"
+            f"\t<td>{position}</td>\n"
+            f"\t<td>{name}</td>\n"
+            f"\t<td>{phone}</td>\n"
+            f"</tr>\n"
+        )
         html_rows += html_row
     return html_rows
+
 
 def write_to_html(rows):
     # Write to HTML file.
     with open('output.html', 'w', encoding='utf-8') as f:
         f.write(rows)
         print('Done! now use output.html file')
+
+
 try:
     zip_obj = excel_to_zip()
     inn_html = zip_into_html(zip_obj)
