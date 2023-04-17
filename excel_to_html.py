@@ -10,10 +10,7 @@ def excel_to_zip():
     position = df['سمت'].fillna('').tolist()
     name = df['نام'].fillna('').tolist()
     phone = df['داخلی'].fillna('').to_list()
-    units = []
-    positions = []
-    names = []
-    phones = []
+    units, positions, names, phones = [], [], [], []
     # Iterate all of valid phones
     for i in range(0, len(phone)):
         if phone[i] != '':
@@ -26,19 +23,20 @@ def excel_to_zip():
     info = zip(units, positions, names, phones)
     return info
 
-def zip_into_html(info):
+def zip_into_html(zipped):
     html_rows = ''
     # Iterate through the zip object
-    for unit, position, name, phone in info:
+    for unit, position, name, phone in zipped:
         # Generate HTML table row
         html_row = f"<tr>\n\t<td>{unit}</td>\n\t<td>{position}</td>\n\t<td>{name}</td>\n\t<td>{phone}</td>\n</tr>\n"
         html_rows += html_row
     return html_rows
 
-def write_to_html(html_rows):
+def write_to_html(rows):
     # Write to HTML file.
     with open('output.html', 'w', encoding='utf-8') as f:
-        f.write(html_rows)
+        f.write(rows)
+        print('Done! now use output.html file')
 
 zip_obj = excel_to_zip()
 inn_html = zip_into_html(zip_obj)
