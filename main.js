@@ -8,8 +8,9 @@ function searchPhonebook() {
         name = rows[i].getElementsByTagName("td")[0];
         unit = rows[i].getElementsByTagName("td")[1];
         ext = rows[i].getElementsByTagName("td")[2];
+        phone = rows[i].getElementsByTagName("td")[3];
         if (name || unit || ext) {
-        if (name.innerHTML.toUpperCase().indexOf(filter) > -1 || unit.innerHTML.toUpperCase().indexOf(filter) > -1 || ext.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        if (name.innerHTML.indexOf(filter) > -1 || unit.innerHTML.indexOf(filter) > -1 || ext.innerHTML.indexOf(filter) > -1 || phone.innerHTML.indexOf(filter) > -1 ) {
             rows[i].style.display = "";
         } else {
             rows[i].style.display= "none";
