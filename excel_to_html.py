@@ -48,9 +48,10 @@ def write_to_html(rows):
         print('Done! now use output.html file')
 
 
-try:
-    zip_obj = excel_to_zip()
-    inn_html = zip_into_html(zip_obj)
-    write_to_html(inn_html)
-except FileNotFoundError:
-    print('ERR: phones.xlsx file not found.')
+if __name__ == '__main__':
+    try:
+        zip_obj = excel_to_zip()
+        inn_html = zip_into_html(zip_obj)
+        write_to_html(inn_html)
+    except FileNotFoundError:
+        print('ERR: phones.xlsx file not found.')
