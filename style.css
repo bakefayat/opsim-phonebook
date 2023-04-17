@@ -18,3 +18,14 @@ table {
     margin-bottom: 10px;
     box-sizing: border-box;
   }
+  #phonebook {
+    direction: rtl; /* Set direction to RTL */
+    text-align: right; /* Set text alignment to right */
+  }
+  #phonebook th,
+#phonebook td {
+  text-align: right; /* Set text alignment to right for table headers and data cells */
+}
+.container {
+  direction: rtl;
+}
