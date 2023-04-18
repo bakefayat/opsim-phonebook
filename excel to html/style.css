@@ -1,0 +1,45 @@
+body{
+  background: url("bg.png") repeat;
+  font-family: Vazirmatn, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 10px;
+  }
+  
+  tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  tr:nth-child(even) {
+    background-color: #ebebeb;
+  }
+  
+  input[type="text"] {
+    padding: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  #phonebook {
+    direction: rtl; /* Set direction to RTL */
+    text-align: right; /* Set text alignment to right */
+  }
+  #phonebook th,
+#phonebook td {
+  text-align: right; /* Set text alignment to right for table headers and data cells */
+}
+.container {
+  direction: rtl;
+}
+tbody, td, tfoot, th, thead, tr{
+  border: 1px solid #d5d5d5;
+}
+thead.tr{
+  background:red !important;
+}
