@@ -47,28 +47,32 @@ def zip_into_html(zipped):
     return html_rows
 
 
+def write_into_html(inn_html):
+    with open('base.html', 'r', encoding='utf-8') as file:
+        html_string = file.read()
+        
+    soup = BeautifulSoup(html_string, 'html.parser')
+    target_element = soup.select_one('.target-id')
+
+    if target_element:
+        # Insert new content into the target element
+        bs4_html = BeautifulSoup(inn_html, 'html.parser')
+        target_element.extend(bs4_html.contents)
+            
+        with open('output.html', 'w', encoding='utf-8') as file:
+            file.write(soup.prettify())
+            print('Done!')
+    else:
+        print("Target element not found in HTML.")
+
+
 if __name__ == '__main__':
     try:
         seprated_cols = seprate_columns()
         zip_obj = columns_to_zip(seprated_cols)
         inn_html = zip_into_html(zip_obj)
+        write_into_html(inn_html)
         
-        with open('base.html', 'r', encoding='utf-8') as file:
-            html_string = file.read()
-        
-        soup = BeautifulSoup(html_string, 'html.parser')
-        target_element = soup.select_one('.target-id')
-
-        if target_element:
-            # Insert new content into the target element
-            bs4_html = BeautifulSoup(inn_html, 'html.parser')
-            target_element.extend(bs4_html.contents)
-             
-            with open('output.html', 'w', encoding='utf-8') as file:
-                file.write(soup.prettify())
-        else:
-            print("Target element not found in HTML.")
-
         # write_to_html(inn_html)
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')
