@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def excel_to_zip():
+def seprate_columns():
     pan = pd.read_excel('phones.xlsx', header=1)
     df = pd.DataFrame(pan)
     # Fill merged units.
@@ -10,6 +10,11 @@ def excel_to_zip():
     position = df['سمت'].fillna('').tolist()
     name = df['نام'].fillna('').tolist()
     phone = df['داخلی'].fillna('').to_list()
+    return (unit, position, name, phone)
+
+
+def columns_to_zip(seprated):
+    unit, position, name, phone = seprated
     units, positions, names, phones = [], [], [], []
     # Iterate all of valid phones
     for i in range(0, len(phone)):
@@ -50,7 +55,8 @@ def write_to_html(rows):
 
 if __name__ == '__main__':
     try:
-        zip_obj = excel_to_zip()
+        seprated_cols = seprate_columns()
+        zip_obj = columns_to_zip(seprated_cols)
         inn_html = zip_into_html(zip_obj)
         write_to_html(inn_html)
     except FileNotFoundError:
