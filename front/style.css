@@ -1,9 +1,11 @@
+body{
+  background: url("bg.png") repeat;
+  font-family: Vazirmatn, sans-serif;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
-  }
-  body{
-    background: url("bg.png") repeat;
   }
   
   th, td {
