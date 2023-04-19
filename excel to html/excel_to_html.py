@@ -1,8 +1,22 @@
 import pandas as pd
+from typing import List, Tuple
+
 from bs4 import BeautifulSoup
 
 
-def seprate_columns():
+def separate_columns() -> Tuple[List[str], List[str], List[str], List[str]]:
+    """
+    Separate columns from an Excel file and return the extracted data
+    as separate lists.
+
+    Returns:
+        Tuple[List[str], List[str], List[str], List[str]]:
+        A tuple containing four lists:
+        - unit: A list of strings representing the 'واحد' column data.
+        - position: A list of strings representing the 'سمت' column data.
+        - name: A list of strings representing the 'نام' column data.
+        - phone: A list of strings representing the 'داخلی' column data.
+    """
     pan = pd.read_excel('phones.xlsx', header=1)
     df = pd.DataFrame(pan)
     # Fill merged units.
@@ -14,8 +28,22 @@ def seprate_columns():
     return (unit, position, name, phone)
 
 
-def columns_to_zip(seprated):
-    unit, position, name, phone = seprated
+def create_zip_from_columns(separated:
+                            Tuple[List[str], List[str], List[str], List[str]]):
+    """
+    Create a zip object from separate lists of columns.
+
+    Args:
+        separated: A tuple containing four lists:
+        - unit: A list of strings representing the 'unit' column data.
+        - position: A list of strings representing the 'position' column data.
+        - name: A list of strings representing the 'name' column data.
+        - phone: A list of strings representing the 'phone' column data.
+
+    Returns:
+        info: A zip object containing tuples with values from the input lists.
+    """
+    unit, position, name, phone = separated
     units, positions, names, phones = [], [], [], []
     # Iterate all of valid phones
     for i in range(0, len(phone)):
@@ -30,7 +58,18 @@ def columns_to_zip(seprated):
     return info
 
 
-def zip_into_html(zipped):
+def zip_into_html(zipped: List[Tuple[str, str, str, str]]) -> str:
+    """
+    Generate HTML table rows from a list of tuples.
+
+    Args:
+        zipped (List[Tuple[str, str, str, str]]):
+        A list of tuples containing four string elements:
+        unit, position, name, and phone.
+
+    Returns:
+        str: A string containing the generated HTML table rows.
+    """
     html_rows = ''
     # Iterate through the zip object
     for unit, position, name, phone in zipped:
@@ -74,11 +113,10 @@ def write_into_html(inn_html: str) -> None:
 
 if __name__ == '__main__':
     try:
-        seprated_cols = seprate_columns()
-        zip_obj = columns_to_zip(seprated_cols)
+        separated_cols = separate_columns()
+        zip_obj = create_zip_from_columns(separated_cols)
         inn_html = zip_into_html(zip_obj)
         write_into_html(inn_html)
 
-        # write_to_html(inn_html)
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')
