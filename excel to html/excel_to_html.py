@@ -36,21 +36,27 @@ def zip_into_html(zipped):
     for unit, position, name, phone in zipped:
         # Generate HTML table row
         html_row = (
-            f"<tr>\n"
-            f"\t<td>{unit}</td>\n"
-            f"\t<td>{position}</td>\n"
-            f"\t<td>{name}</td>\n"
-            f"\t<td>{phone}</td>\n"
-            f"</tr>\n"
+            f"<tr>"
+            f"<td>{unit}</td>"
+            f"<td>{position}</td>"
+            f"<td>{name}</td>"
+            f"<td>{phone}</td>"
+            f"</tr>"
         )
         html_rows += html_row
     return html_rows
 
 
-def write_into_html(inn_html):
+def write_into_html(inn_html: str) -> None:
+    """
+    Write new content into an HTML file.
+
+    Args:
+        inn_html (str): The new content to be inserted, in HTML format.
+    """
     with open('base.html', 'r', encoding='utf-8') as file:
         html_string = file.read()
-        
+
     soup = BeautifulSoup(html_string, 'html.parser')
     target_element = soup.select_one('.target-id')
 
@@ -58,7 +64,7 @@ def write_into_html(inn_html):
         # Insert new content into the target element
         bs4_html = BeautifulSoup(inn_html, 'html.parser')
         target_element.extend(bs4_html.contents)
-            
+
         with open('output.html', 'w', encoding='utf-8') as file:
             file.write(soup.prettify())
             print('Done!')
@@ -72,7 +78,7 @@ if __name__ == '__main__':
         zip_obj = columns_to_zip(seprated_cols)
         inn_html = zip_into_html(zip_obj)
         write_into_html(inn_html)
-        
+
         # write_to_html(inn_html)
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')
