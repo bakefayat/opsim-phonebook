@@ -23,8 +23,8 @@ def separate_columns() -> Tuple[List[str], List[str], List[str], List[str]]:
     df['واحد'].fillna(method='ffill', inplace=True)
     unit = df['واحد'].tolist()
     position = df['سمت'].fillna('').tolist()
-    name = df['نام'].fillna('').tolist()
-    phone = df['داخلی'].fillna('').to_list()
+    name = df['نام خانوادگی'].fillna('').tolist()
+    phone = df['شماره داخلی'].fillna('').to_list()
     return (unit, position, name, phone)
 
 
@@ -76,7 +76,7 @@ def zip_into_html(zipped: List[Tuple[str, str, str, str]]) -> str:
         # Generate HTML table row
         html_row = (
             f"<tr>"
-            f"<td>{unit}</td>"
+            f"<td class='sahelbold'>{unit}</td>"
             f"<td>{position}</td>"
             f"<td>{name}</td>"
             f"<td>{phone}</td>"
