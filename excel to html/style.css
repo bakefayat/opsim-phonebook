@@ -8,7 +8,6 @@ body{
 table {
   border-collapse: collapse;
   overflow-y:scroll;
-  height:600px;
   display:block;
 }
 
@@ -41,9 +40,9 @@ input[type="text"] {
 .container {
   direction: rtl;
 }
-tbody, td, tfoot, th, thead, tr{
+/* tbody, td, tfoot, th, thead, tr{
   border: 1px solid #d5d5d5;
-}
+} */
 thead.tr{
   background:red !important;
 }
