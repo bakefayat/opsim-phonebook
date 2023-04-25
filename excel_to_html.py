@@ -86,7 +86,18 @@ def zip_into_html(zipped: List[Tuple[str, str, str, str]]) -> str:
     return html_rows
 
 
-def write_into_html(inn_html: str, edition: str) -> None:
+def get_data():
+    edition_input = input('Enter edition like: 1402/01/21 ')
+    url_input = input('Enter full address of pdf file ')
+    full_text = (
+        f'نسخه {edition_input}<br>'
+        f'<a href="{url_input}">مشاهده فایل pdf شماره ها'
+    )
+    print(full_text)
+    return full_text
+
+
+def write_into_html(inn_html: str, edition: str,) -> None:
     """
     Write new content into an HTML file.
 
@@ -106,7 +117,6 @@ def write_into_html(inn_html: str, edition: str) -> None:
         bs4_html = BeautifulSoup(inn_html, 'html.parser')
         tbody_target_element.extend(bs4_html.contents)
         # Insert new content into the edition element
-        edition = f'نسخه {edition}'
         bs4_edition = BeautifulSoup(edition, features="html.parser")
         edition_element.extend(bs4_edition.contents)
         # Write into HTML file.
@@ -122,8 +132,7 @@ if __name__ == '__main__':
         separated_cols = separate_columns()
         zip_obj = create_zip_from_columns(separated_cols)
         inn_html = zip_into_html(zip_obj)
-        edition_input = input('Enter edition like: 1402/01/21 ')
-        write_into_html(inn_html, edition_input)
+        write_into_html(inn_html, get_data())
 
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')
