@@ -41,11 +41,19 @@ input[type="text"] {
 /* tbody, td, tfoot, th, thead, tr{
   border: 1px solid #d5d5d5;
 } */
-thead.tr{
-  background:red !important;
-}
 .table-height{
   display: block;
   max-height: 47vh !important;
   overflow: auto;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000;
 }
