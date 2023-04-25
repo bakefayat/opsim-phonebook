@@ -86,29 +86,35 @@ def zip_into_html(zipped: List[Tuple[str, str, str, str]]) -> str:
     return html_rows
 
 
-def write_into_html(inn_html: str) -> None:
+def write_into_html(inn_html: str, edition: str) -> None:
     """
     Write new content into an HTML file.
 
     Args:
         inn_html (str): The new content to be inserted, in HTML format.
+        edition (str): The date of new edition.
     """
     with open('base.html', 'r', encoding='utf-8') as file:
         html_string = file.read()
 
     soup = BeautifulSoup(html_string, 'html.parser')
-    target_element = soup.select_one('.target-id')
+    tbody_target_element = soup.select_one('.target-id')
+    edition_element = soup.select_one('.edition')
 
-    if target_element:
-        # Insert new content into the target element
+    if tbody_target_element and edition_element:
+        # Insert new content into the tbody target element
         bs4_html = BeautifulSoup(inn_html, 'html.parser')
-        target_element.extend(bs4_html.contents)
-
+        tbody_target_element.extend(bs4_html.contents)
+        # Insert new content into the edition element
+        edition = f'نسخه {edition}'
+        bs4_edition = BeautifulSoup(edition, features="html.parser")
+        edition_element.extend(bs4_edition.contents)
+        # Write into HTML file.
         with open('output.html', 'w', encoding='utf-8') as file:
             file.write(soup.prettify())
             print('Done!')
     else:
-        print("Target element not found in HTML.")
+        print("One of the target elements not found in HTML.")
 
 
 if __name__ == '__main__':
@@ -116,7 +122,8 @@ if __name__ == '__main__':
         separated_cols = separate_columns()
         zip_obj = create_zip_from_columns(separated_cols)
         inn_html = zip_into_html(zip_obj)
-        write_into_html(inn_html)
+        edition_input = input('Enter edition like: 1402/01/21 ')
+        write_into_html(inn_html, edition_input)
 
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')
