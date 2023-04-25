@@ -93,7 +93,6 @@ def get_data():
         f'نسخه {edition_input}<br>'
         f'<a href="{url_input}">مشاهده فایل pdf شماره ها'
     )
-    print(full_text)
     return full_text
 
 

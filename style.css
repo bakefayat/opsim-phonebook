@@ -9,7 +9,8 @@ body{
 table {
   border-collapse: collapse;
   overflow-y:scroll;
-  display:block;
+  max-height: 47vh;
+  overflow-y: auto;
 }
 
 th, td {
@@ -31,19 +32,20 @@ input[type="text"] {
   box-sizing: border-box;
 }
 #phonebook {
-  direction: rtl; /* Set direction to RTL */
   text-align: right; /* Set text alignment to right */
 }
 #phonebook th,
 #phonebook td {
   text-align: right; /* Set text alignment to right for table headers and data cells */
 }
-.container {
-  direction: rtl;
-}
 /* tbody, td, tfoot, th, thead, tr{
   border: 1px solid #d5d5d5;
 } */
 thead.tr{
   background:red !important;
+}
+.table-height{
+  display: block;
+  max-height: 47vh !important;
+  overflow: auto;
 }
