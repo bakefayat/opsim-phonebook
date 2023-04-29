@@ -25,7 +25,7 @@ def separate_columns() -> Tuple[List[str], List[str], List[str], List[str]]:
     position = df['سمت'].fillna('').tolist()
     name = df['نام خانوادگی'].fillna('').tolist()
     phone = df['شماره داخلی'].fillna('').to_list()
-    return (unit, position, name, phone)
+    return unit, position, name, phone
 
 
 def create_zip_from_columns(separated:
@@ -51,14 +51,14 @@ def create_zip_from_columns(separated:
             names.append(name[i])
             # phones changed from float type to int
             phones.append(int(phone[i]))
-            # units that has unusual space fixed.
+            # units that have unusual space fixed.
             units.append(unit[i].replace('ـ', ''))
             positions.append(position[i])
     info = zip(units, positions, names, phones)
     return info
 
 
-def zip_into_html(zipped: List[Tuple[str, str, str, str]]) -> str:
+def zip_to_html(zipped: List[Tuple[str, str, str, str]]) -> str:
     """
     Generate HTML table rows from a list of tuples.
 
@@ -76,7 +76,7 @@ def zip_into_html(zipped: List[Tuple[str, str, str, str]]) -> str:
         # Generate HTML table row
         html_row = (
             f"<tr>"
-            f"<td class='sahelbold'>{unit}</td>"
+            f"<td class='sahel-font'>{unit}</td>"
             f"<td>{position}</td>"
             f"<td>{name}</td>"
             f"<td>{phone}</td>"
@@ -130,8 +130,8 @@ if __name__ == '__main__':
     try:
         separated_cols = separate_columns()
         zip_obj = create_zip_from_columns(separated_cols)
-        inn_html = zip_into_html(zip_obj)
-        write_into_html(inn_html, get_data())
+        context = zip_to_html(zip_obj)
+        write_into_html(context, get_data())
 
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')
