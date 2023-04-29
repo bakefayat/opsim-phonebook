@@ -2,3 +2,5 @@
 phones.xlsx
 output.html
 .idea/
+output/*
+!output/.gitkeep
