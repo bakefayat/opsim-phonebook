@@ -93,16 +93,17 @@ def get_data():
         f'نسخه {edition_input}<br>'
         f'<a href="{url_input}">مشاهده فایل pdf شماره ها'
     )
-    return full_text
+    return full_text, edition_input.replace("/", "-")
 
 
-def write_into_html(inn_html: str, edition: str,) -> None:
+def write_into_html(inn_html: str, footer: str, edition: str) -> None:
     """
     Write new content into an HTML file.
 
     Args:
         inn_html (str): The new content to be inserted, in HTML format.
-        edition (str): The date of new edition.
+        footer (str): containing full context of footer.
+        edition (str): edition of file appending on output file name.
     """
     with open('base.html', 'r', encoding='utf-8') as file:
         html_string = file.read()
@@ -116,12 +117,13 @@ def write_into_html(inn_html: str, edition: str,) -> None:
         bs4_html = BeautifulSoup(inn_html, 'html.parser')
         tbody_target_element.extend(bs4_html.contents)
         # Insert new content into the edition element
-        bs4_edition = BeautifulSoup(edition, features="html.parser")
+        bs4_edition = BeautifulSoup(footer, features="html.parser")
         edition_element.extend(bs4_edition.contents)
         # Write into HTML file.
-        with open('output.html', 'w', encoding='utf-8') as file:
+        output_name = f'output/تلفن داخلی سایت سنگان ویرایش {edition}.html'
+        with open(output_name, 'w', encoding='utf-8') as file:
             file.write(soup.prettify())
-            print('Done!')
+            print(f'Done! open file on : {output_name}')
     else:
         print("One of the target elements not found in HTML.")
 
@@ -131,7 +133,8 @@ if __name__ == '__main__':
         separated_cols = separate_columns()
         zip_obj = create_zip_from_columns(separated_cols)
         context = zip_to_html(zip_obj)
-        write_into_html(context, get_data())
+        footer_context, edition = get_data()
+        write_into_html(context, footer_context, edition)
 
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')
