@@ -92,40 +92,40 @@ def get_data():
     """
     edition_input = input('Enter edition like: 1402/01/21 ')
     url_input = input('Enter full address of pdf file ')
-    footer_context = html_footer(edition_input, url_input)
+    footer_html = html_footer(edition_input, url_input)
     rtl_edition = reverse_edition(edition_input)
     
-    return footer_context, rtl_edition
+    return footer_html, rtl_edition
 
 
-def reverse_edition(edition_input : str) -> str:
+def reverse_edition(edition_input: str) -> str:
     """
     Reverse edition from type of YYYY/MM/DD to DD-MM-YYYY to show correctly in rtl direction.
     """
-    splited_edition = edition_input.split('/')
-    edition = f'{splited_edition[2]}-{splited_edition[1]}-{splited_edition[0]}'
-    return edition
+    splitted_edition = edition_input.split('/')
+    reverse = f'{splitted_edition[2]}-{splitted_edition[1]}-{splitted_edition[0]}'
+    return reverse
 
 
-def html_footer(edition :str, url: str) -> str:
+def html_footer(slash_edition: str, url: str) -> str:
     """
     convert edition and url to full footer html text.
     """
     full_text = (
-        f'نسخه {edition}<br>'
+        f'نسخه {slash_edition}<br>'
         f'<a href="{url}">مشاهده فایل pdf شماره ها'
     )
     return full_text
 
 
-def write_into_html(inn_html: str, footer: str, edition: str) -> None:
+def write_into_html(inn_html: str, footer: str, dash_edition: str) -> None:
     """
     Write new content into an HTML file.
 
     Args:
         inn_html (str): The new content to be inserted, in HTML format.
         footer (str): containing full context of footer.
-        edition (str): edition of file appending on output file name.
+        dash_edition (str): edition of file appending on output file name.
     """
     with open('base.html', 'r', encoding='utf-8') as file:
         html_string = file.read()
@@ -142,7 +142,7 @@ def write_into_html(inn_html: str, footer: str, edition: str) -> None:
         bs4_edition = BeautifulSoup(footer, features="html.parser")
         edition_element.extend(bs4_edition.contents)
         # Write into HTML file.
-        output_name = f'output/تلفن داخلی سایت سنگان ویرایش {edition}.html'
+        output_name = f'output/تلفن داخلی سایت سنگان ویرایش {dash_edition}.html'
         with open(output_name, 'w', encoding='utf-8') as file:
             file.write(soup.prettify())
             print('Done!')
