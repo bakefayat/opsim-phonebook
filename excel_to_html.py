@@ -87,13 +87,35 @@ def zip_to_html(zipped: List[Tuple[str, str, str, str]]) -> str:
 
 
 def get_data():
+    """
+    get edition and url from user and convert them into full footer html and rtl edition. 
+    """
     edition_input = input('Enter edition like: 1402/01/21 ')
     url_input = input('Enter full address of pdf file ')
+    footer_context = html_footer(edition_input, url_input)
+    rtl_edition = reverse_edition(edition_input)
+    
+    return footer_context, rtl_edition
+
+
+def reverse_edition(edition_input : str) -> str:
+    """
+    Reverse edition from type of YYYY/MM/DD to DD-MM-YYYY to show correctly in rtl direction.
+    """
+    splited_edition = edition_input.split('/')
+    edition = f'{splited_edition[2]}-{splited_edition[1]}-{splited_edition[0]}'
+    return edition
+
+
+def html_footer(edition :str, url: str) -> str:
+    """
+    convert edition and url to full footer html text.
+    """
     full_text = (
-        f'نسخه {edition_input}<br>'
-        f'<a href="{url_input}">مشاهده فایل pdf شماره ها'
+        f'نسخه {edition}<br>'
+        f'<a href="{url}">مشاهده فایل pdf شماره ها'
     )
-    return full_text, edition_input.replace("/", "-")
+    return full_text
 
 
 def write_into_html(inn_html: str, footer: str, edition: str) -> None:
@@ -123,7 +145,7 @@ def write_into_html(inn_html: str, footer: str, edition: str) -> None:
         output_name = f'output/تلفن داخلی سایت سنگان ویرایش {edition}.html'
         with open(output_name, 'w', encoding='utf-8') as file:
             file.write(soup.prettify())
-            print(f'Done! open file on : {output_name}')
+            print('Done!')
     else:
         print("One of the target elements not found in HTML.")
 
@@ -132,9 +154,9 @@ if __name__ == '__main__':
     try:
         separated_cols = separate_columns()
         zip_obj = create_zip_from_columns(separated_cols)
-        context = zip_to_html(zip_obj)
+        rows_context = zip_to_html(zip_obj)
         footer_context, edition = get_data()
-        write_into_html(context, footer_context, edition)
+        write_into_html(rows_context, footer_context, edition)
 
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')

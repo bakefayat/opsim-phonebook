@@ -4,3 +4,4 @@ output.html
 .idea/
 output/*
 !output/.gitkeep
+settings.json
