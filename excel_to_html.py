@@ -160,3 +160,6 @@ if __name__ == '__main__':
 
     except FileNotFoundError:
         print('ERR: phones.xlsx file not found.')
+
+    except IndexError:
+        print('Date format is incorrect')
