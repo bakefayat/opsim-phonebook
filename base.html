@@ -77,9 +77,9 @@ input[type="text"] {
     <div class="container">
       <div class="row">
         <div class="col-lg-7 mx-auto text-center">
-          <form onsubmit="showTable(); return false;">
+          <form onsubmit="showTable();searchPhonebook(); return false;">
             <div class="form-group mt-1">
-              <input type="text" id="searchInput" class="form-control" onkeyup="searchPhonebook()" placeholder="واحد، سمت، نام یا شماره داخلی را وارد کنید...">
+              <input type="text" id="searchInput" class="form-control" placeholder="واحد، سمت، نام یا شماره داخلی را وارد کنید...">
               <button type="button" onclick="showTable()" class="btn btn-primary mt-2">جستجو</button>
             </div>
           </form>          
