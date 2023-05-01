@@ -70,21 +70,22 @@ input[type="text"] {
   <div class="container">
     <header class="pb-3 mb-4 text-center border-bottom">
         <img src="https://i.postimg.cc/k410ttG1/opsim.jpg" height="80px;">
-        <span class="fs-4">تلفن داخلی های پرسنل سایت سنگان</span>
+        <span class="fs-4">شرکت اپال پارسیان سنگان</span>
     </header>
   </div>
   <div class="text-center">
     <div class="container">
       <div class="row">
         <div class="col-lg-7 mx-auto text-center">
-          <form>
+          <form onsubmit="showTable(); return false;">
             <div class="form-group mt-1">
               <input type="text" id="searchInput" class="form-control" onkeyup="searchPhonebook()" placeholder="واحد، سمت، نام یا شماره داخلی را وارد کنید...">
+              <button type="button" onclick="showTable()" class="btn btn-primary mt-2">جستجو</button>
             </div>
-          </form>
+          </form>          
         </div>
         <div class="col-lg-7 mx-auto text-center table-height">
-          <table class="table" id="phonebook">
+          <table class="table" id="phonebook" style="display: none;">
             <thead class="sahelbold">
               <tr>
                 <th>واحد</th>
@@ -127,6 +128,11 @@ input[type="text"] {
         }
     }
     }
+    function showTable() {
+  var table = document.getElementById("phonebook");
+  table.style.display = "table";
+}
+
   </script>
 </body>
 </html>
