@@ -180,4 +180,10 @@ if __name__ == '__main__':
         print('ERR: phones.xlsx file not found.')
 
     except IndexError:
-        print('Date format is incorrect')
+        print('ERR: Date format is incorrect')
+
+    except KeyError:
+        print('ERR: Check Columns head values or startpoint.')
+
+    except KeyboardInterrupt:
+        print('ERR: you ended the program.')
