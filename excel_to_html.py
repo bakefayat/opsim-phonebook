@@ -1,13 +1,22 @@
+import os
+import webbrowser
+
 import pandas as pd
 from typing import List, Tuple
 
 from bs4 import BeautifulSoup
 
 
-def separate_columns() -> Tuple[List[str], List[str], List[str], List[str]]:
+def separate_columns(file_path: str, header: int) -> Tuple[
+    List[str], List[str], List[str], List[str]
+]:
     """
     Separate columns from an Excel file and return the extracted data
     as separate lists.
+
+    Args:
+        file_path: input xlsx file.
+        header: start point of file.
 
     Returns:
         Tuple[List[str], List[str], List[str], List[str]]:
@@ -17,7 +26,7 @@ def separate_columns() -> Tuple[List[str], List[str], List[str], List[str]]:
         - name: A list of strings representing the 'نام' column data.
         - phone: A list of strings representing the 'داخلی' column data.
     """
-    pan = pd.read_excel('phones.xlsx', header=1)
+    pan = pd.read_excel(file_path, header=header)
     df = pd.DataFrame(pan)
     # Fill merged units.
     df['واحد'].fillna(method='ffill', inplace=True)
@@ -88,22 +97,23 @@ def zip_to_html(zipped: List[Tuple[str, str, str, str]]) -> str:
 
 def get_data():
     """
-    get edition and url from user and convert them into full footer html and rtl edition. 
+    get data from user and convert them into full footer html and rtl edition.
     """
     edition_input = input('Enter edition like: 1402/01/21 ')
     url_input = input('Enter full address of pdf file ')
     footer_html = html_footer(edition_input, url_input)
     rtl_edition = reverse_edition(edition_input)
-    
+
     return footer_html, rtl_edition
 
 
 def reverse_edition(edition_input: str) -> str:
     """
-    Reverse edition from type of YYYY/MM/DD to DD-MM-YYYY to show correctly in rtl direction.
+    Reverse edition from type of YYYY/MM/DD to DD-MM-YYYY
+    to show correctly in rtl direction.
     """
-    splitted_edition = edition_input.split('/')
-    reverse = f'{splitted_edition[2]}-{splitted_edition[1]}-{splitted_edition[0]}'
+    splitted = edition_input.split('/')
+    reverse = f'{splitted[2]}-{splitted[1]}-{splitted[0]}'
     return reverse
 
 
@@ -116,6 +126,12 @@ def html_footer(slash_edition: str, url: str) -> str:
         f'<a href="{url}">مشاهده فایل pdf شماره ها'
     )
     return full_text
+
+
+def get_output_path(dash_edition):
+    output_name = f'output/تلفن داخلی سایت سنگان ویرایش {dash_edition}.html'
+    full_path = os.path.dirname(os.path.abspath(__file__)) + '/' + output_name
+    return full_path
 
 
 def write_into_html(inn_html: str, footer: str, dash_edition: str) -> None:
@@ -142,17 +158,19 @@ def write_into_html(inn_html: str, footer: str, dash_edition: str) -> None:
         bs4_edition = BeautifulSoup(footer, features="html.parser")
         edition_element.extend(bs4_edition.contents)
         # Write into HTML file.
-        output_name = f'output/تلفن داخلی سایت سنگان ویرایش {dash_edition}.html'
-        with open(output_name, 'w', encoding='utf-8') as file:
+        output_path = get_output_path(dash_edition)
+        with open(output_path, 'w', encoding='utf-8') as file:
             file.write(soup.prettify())
             print('Done!')
+            webbrowser.open(output_path)
     else:
-        print("One of the target elements not found in HTML.")
+        print("One of the target elements wasn't found in HTML.")
 
 
 if __name__ == '__main__':
     try:
-        separated_cols = separate_columns()
+        # seprate columns of file with starting point.
+        separated_cols = separate_columns('phones.xlsx', 1)
         zip_obj = create_zip_from_columns(separated_cols)
         rows_context = zip_to_html(zip_obj)
         footer_context, edition = get_data()
