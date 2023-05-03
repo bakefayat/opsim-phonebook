@@ -39,7 +39,7 @@ footer {
 
 @media screen and (max-width: 767px) {
   footer {
-    height: 100px; /* ارتفاع فوتر برای صفحات با عرض کوچکتر از 768 پیکسل */
+    height: 40x; /* ارتفاع فوتر برای صفحات با عرض کوچکتر از 768 پیکسل */
   }
 }
 
@@ -92,14 +92,28 @@ input[type="text"] {
 ::-webkit-scrollbar-thumb {
   background-color: #000;
 }
+@media (max-height: 499px) {
+  footer {
+    display: none;
+  }
+}
+@media (max-height: 330px) {
+  .hide-lower-height {
+    display: none;
+  }
+}
+
   </style>
 </head>
 <body>
   <div class="container">
-    <header class="pb-3 mb-4 text-center border-bottom">
-        <img src="https://i.postimg.cc/k410ttG1/opsim.jpg" height="80px;">
-        <span class="fs-4 sahel-font">شرکت اپال پارسیان سنگان</span>
-    </header>
+    <header class="pb-sm-3 mb-4 mt-2 text-center border-bottom">
+      <img src="https://i.postimg.cc/k410ttG1/opsim.jpg" alt="opsim-logo" class="hide-lower-height" height="80px">
+      <p class="fs-3 mb-2 sahel-font">شرکت اپال پارسیان سنگان</p>
+      <p class="mb-0">دفترچه تلفن شماره های داخلی سایت سنگان</p>
+      <span class="fs-6" style="color:darkgrey">ویرایش 2/2/2</span>
+  </header>
+  
   </div>
   <div class="text-center">
     <div class="container">
@@ -107,7 +121,7 @@ input[type="text"] {
         <div class="col-lg-7 mx-auto text-center">
           <form onsubmit="showTable();searchPhonebook(); return false;">
             <div class="form-group mt-1">
-              <input type="text" id="searchInput" class="form-control" placeholder="واحد، سمت، نام یا شماره داخلی را وارد کنید...">
+              <input type="text" id="searchInput" class="form-control" placeholder="عبارت موردنظر را اینجا وارد کنید">
               <button type="button" onclick="showTable()" class="btn btn-primary mt-2">جستجو</button>
             </div>
           </form>          
