@@ -7,43 +7,33 @@ from typing import List, Tuple
 from bs4 import BeautifulSoup
 
 
-def separate_columns(file_path: str, header: int) -> Tuple[
-    List[str], List[str], List[str], List[str]
-]:
+def separate_columns(file_path: str, header: int, *args):
     """
     Separate columns from an Excel file and return the extracted data
     as separate lists.
-
-    Args:
-        file_path: input xlsx file.
-        header: start point of file.
-
-    Returns:
-        Tuple[List[str], List[str], List[str], List[str]]:
-        A tuple containing four lists:
-        - unit: A list of strings representing the 'واحد' column data.
-        - position: A list of strings representing the 'سمت' column data.
-        - name: A list of strings representing the 'نام' column data.
-        - phone: A list of strings representing the 'داخلی' column data.
     """
     pan = pd.read_excel(file_path, header=header)
     df = pd.DataFrame(pan)
-    # Fill merged units.
-    df['واحد'].fillna(method='ffill', inplace=True)
-    unit = df['واحد'].tolist()
-    position = df['سمت'].fillna('').tolist()
-    name = df['نام خانوادگی'].fillna('').tolist()
-    phone = df['شماره داخلی'].fillna('').to_list()
-    return unit, position, name, phone
+    columns = []
+    for col in args:
+        column = df[col.get('title')]
+        if col.get('fill'):
+            column.fillna(method='ffill', inplace=True)
+        else:
+            column = column.fillna('')
+
+        column.tolist()
+        columns.append(column)
+
+    return columns
 
 
-def create_zip_from_columns(separated:
-                            Tuple[List[str], List[str], List[str], List[str]]):
+def create_zip_from_columns(separated):
     """
     Create a zip object from separate lists of columns.
 
     Args:
-        separated: A tuple containing four lists:
+        separated: A list containing four lists:
         - unit: A list of strings representing the 'unit' column data.
         - position: A list of strings representing the 'position' column data.
         - name: A list of strings representing the 'name' column data.
@@ -52,14 +42,13 @@ def create_zip_from_columns(separated:
     Returns:
         info: A zip object containing tuples with values from the input lists.
     """
-    unit, position, name, phone = separated
+    unit, position, name, phone = separated[:]
     units, positions, names, phones = [], [], [], []
     # Iterate all of valid phones
     for i in range(0, len(phone)):
         if phone[i] != '':
             names.append(name[i])
-            # phones changed from float type to int
-            phones.append(int(phone[i]))
+            phones.append(phone[i])
             # units that have unusual space fixed.
             units.append(unit[i].replace('ـ', ''))
             positions.append(position[i])
@@ -170,7 +159,11 @@ def write_into_html(inn_html: str, footer: str, dash_edition: str) -> None:
 if __name__ == '__main__':
     try:
         # seprate columns of file with starting point.
-        separated_cols = separate_columns('phones.xlsx', 1)
+        col1 = {'title': 'واحد', 'format': str, 'fill': True}
+        col2 = {'title': 'سمت', 'format': str, 'fill': False}
+        col3 = {'title': 'نام خانوادگی', 'format': str, 'fill': False}
+        col4 = {'title': 'شماره داخلی', 'format': int, 'fill': False}
+        separated_cols = separate_columns('phones.xlsx', 1, col1, col2, col3, col4)
         zip_obj = create_zip_from_columns(separated_cols)
         rows_context = zip_to_html(zip_obj)
         footer_context, edition = get_data()
