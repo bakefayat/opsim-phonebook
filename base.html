@@ -118,11 +118,12 @@ input[type="text"] {
   <div class="text-center">
     <div class="container">
       <div class="row">
-        <div class="col-lg-7 mx-auto text-center">
+        <div class="col-lg-4 mx-auto text-center">
           <form onsubmit="showTable();searchPhonebook(); return false;">
             <div class="form-group mt-1">
-              <input type="text" id="searchInput" class="form-control" placeholder="عبارت موردنظر را اینجا وارد کنید">
-              <button type="button" onclick="showTable()" class="btn btn-primary mt-2">جستجو</button>
+              <input type="text" id="searchInput" onkeyup="searchPhonebook();showTable()" class="form-control" placeholder="عبارت موردنظر را اینجا وارد کنید">
+              <br>
+              <button type="button" class="btn btn-primary mt-2">جستجو</button>
             </div>
           </form>          
         </div>
@@ -174,7 +175,11 @@ input[type="text"] {
       var table = document.getElementById("phonebook");
       table.style.display = "table";
     }
+
+    
+    // focus by default
     document.getElementById('searchInput').focus();
+
   </script>
 </body>
 </html>
