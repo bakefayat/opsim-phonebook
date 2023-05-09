@@ -77,7 +77,7 @@ def zip_to_html(zipped: List[Tuple[str, str, str, str]]) -> str:
             f"<td class='sahel-font'>{unit}</td>"
             f"<td>{position}</td>"
             f"<td>{name}</td>"
-            f"<td>{phone}</td>"
+            f"<td>{int(phone)}</td>"
             f"</tr>"
         )
         html_rows += html_row
@@ -89,8 +89,7 @@ def get_data():
     get data from user and convert them into full footer html and rtl edition.
     """
     edition_input = input('Enter edition like: 1402/01/21 ')
-    url_input = input('Enter full address of pdf file ')
-    footer_html = html_footer(edition_input, url_input)
+    footer_html = html_footer(edition_input)
     rtl_edition = reverse_edition(edition_input)
 
     return footer_html, rtl_edition
@@ -106,13 +105,12 @@ def reverse_edition(edition_input: str) -> str:
     return reverse
 
 
-def html_footer(slash_edition: str, url: str) -> str:
+def html_footer(slash_edition: str) -> str:
     """
     convert edition and url to full footer html text.
     """
     full_text = (
         f'نسخه {slash_edition}<br>'
-        f'<a href="{url}">مشاهده فایل pdf شماره ها'
     )
     return full_text
 
