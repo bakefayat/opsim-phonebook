@@ -148,54 +148,42 @@ input[type="text"] {
   </footer>
 
   <script>
-function searchPhonebook() {
-  var input, filter, table, rows, name, unit, ext, i;
-  input = document.getElementById("searchInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("phonebook");
-  rows = table.getElementsByTagName("tr");
-  for (i = 0; i < rows.length; i++) {
+  function searchPhonebook() {
+    var input, filter, table, rows, name, unit, ext, phone, i;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("phonebook");
+    rows = table.getElementsByTagName("tr");
+    for (i = 0; i < rows.length; i++) {
       name = rows[i].getElementsByTagName("td")[0];
       unit = rows[i].getElementsByTagName("td")[1];
       ext = rows[i].getElementsByTagName("td")[2];
       phone = rows[i].getElementsByTagName("td")[3];
       if (name || unit || ext || phone) {
-      if (name.innerHTML.indexOf(filter) > -1 || unit.innerHTML.indexOf(filter) > -1 || ext.innerHTML.indexOf(filter) > -1 || phone.innerHTML.indexOf(filter) > -1 ) {
-        rows[i].style.display = "";
-        
-        if (name.innerHTML.indexOf(filter) > -1){
-          console.log('hello')
-          name.style.backgroundColor = "yellow";
-          name.style.display = "";
-      }
-        else if(unit.innerHTML.indexOf(filter) > -1 ){
-          console.log('hello')
-
-          unit.style.backgroundColor = "yellow";   // Added this line 
-          unit.style.display = "";
-
-        }
-        else if(ext.innerHTML.indexOf(filter) > -1){
-          console.log('hello')
-
-          ext.style.backgroundColor = "yellow";   // Added this line 
-          ext.style.display = "";
-
-        }
-        else if(phone.innerHTML.indexOf(filter) > -1 ) {
-          console.log('hello')
-
-          phone.style.backgroundColor = "yellow";   // Added this line 
-          phone.style.display = "";
-      }}
-       else {
-        console.log('hello')
-
+        if (name.innerHTML.toUpperCase().indexOf(filter) > -1 || unit.innerHTML.toUpperCase().indexOf(filter) > -1 || ext.innerHTML.toUpperCase().indexOf(filter) > -1 || phone.innerHTML.toUpperCase().indexOf(filter) > -1 ) {
+          rows[i].style.display = "";
+          name.style.backgroundColor = "";
+          unit.style.backgroundColor = "";
+          ext.style.backgroundColor = "";
+          phone.style.backgroundColor = "";
+          if (name.innerHTML.toUpperCase().indexOf(filter) > -1){
+            name.style.backgroundColor = "yellow";
+          }
+          else if(unit.innerHTML.toUpperCase().indexOf(filter) > -1 ){
+            unit.style.backgroundColor = "yellow";
+          }
+          else if(ext.innerHTML.toUpperCase().indexOf(filter) > -1){
+            ext.style.backgroundColor = "yellow";
+          }
+          else if(phone.innerHTML.toUpperCase().indexOf(filter) > -1 ) {
+            phone.style.backgroundColor = "yellow";
+          }
+        } else {
           rows[i].style.display= "none";
+        }
       }
-      }
+    }
   }
-}
     function showTable() {
       var table = document.getElementById("phonebook");
       table.style.display = "table";
