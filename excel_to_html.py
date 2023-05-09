@@ -160,7 +160,7 @@ if __name__ == '__main__':
     try:
         # seprate columns of file with starting point.
         col1 = {'title': 'واحد', 'format': str, 'fill': True}
-        col2 = {'title': 'سمت', 'format': str, 'fill': False}
+        col2 = {'title': 'سمت', 'format': str, 'fill': True}
         col3 = {'title': 'نام خانوادگی', 'format': str, 'fill': False}
         col4 = {'title': 'شماره داخلی', 'format': int, 'fill': False}
         separated_cols = separate_columns('phones.xlsx', 1, col1, col2, col3, col4)
