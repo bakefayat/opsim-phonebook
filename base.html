@@ -123,7 +123,7 @@ input[type="text"] {
           </form>          
         </div>
         <div class="col-lg-7 mx-auto text-center table-height">
-          <div id="ict-image">
+          <div id="ict-image" class="hide-lower-height">
             <img src="https://s8.uupload.ir/files/ictt_v3zo.jpg" class="image-responsive">
           </div>
           <table class="table" id="phonebook" style="display: none;">
@@ -159,10 +159,38 @@ function searchPhonebook() {
       unit = rows[i].getElementsByTagName("td")[1];
       ext = rows[i].getElementsByTagName("td")[2];
       phone = rows[i].getElementsByTagName("td")[3];
-      if (name || unit || ext) {
+      if (name || unit || ext || phone) {
       if (name.innerHTML.indexOf(filter) > -1 || unit.innerHTML.indexOf(filter) > -1 || ext.innerHTML.indexOf(filter) > -1 || phone.innerHTML.indexOf(filter) > -1 ) {
-          rows[i].style.display = "";
-      } else {
+        rows[i].style.display = "";
+        
+        if (name.innerHTML.indexOf(filter) > -1){
+          console.log('hello')
+          name.style.backgroundColor = "yellow";
+          name.style.display = "";
+      }
+        else if(unit.innerHTML.indexOf(filter) > -1 ){
+          console.log('hello')
+
+          unit.style.backgroundColor = "yellow";   // Added this line 
+          unit.style.display = "";
+
+        }
+        else if(ext.innerHTML.indexOf(filter) > -1){
+          console.log('hello')
+
+          ext.style.backgroundColor = "yellow";   // Added this line 
+          ext.style.display = "";
+
+        }
+        else if(phone.innerHTML.indexOf(filter) > -1 ) {
+          console.log('hello')
+
+          phone.style.backgroundColor = "yellow";   // Added this line 
+          phone.style.display = "";
+      }}
+       else {
+        console.log('hello')
+
           rows[i].style.display= "none";
       }
       }
