@@ -111,23 +111,21 @@ input[type="text"] {
       <img src="https://i.postimg.cc/k410ttG1/opsim.jpg" alt="opsim-logo" class="hide-lower-height" height="80px">
       <p class="fs-3 mb-2 sahel-font">شرکت اپال پارسیان سنگان</p>
       <p class="mb-0">دفترچه تلفن شماره های داخلی سایت سنگان</p>
-      <span class="fs-6" style="color:darkgrey">ویرایش 2/2/2</span>
   </header>
-  
-  </div>
-  <div class="text-center">
-    <div class="container">
       <div class="row">
         <div class="col-lg-4 mx-auto text-center">
           <form onsubmit="showTable();searchPhonebook(); return false;">
             <div class="form-group mt-1">
-              <input type="text" id="searchInput" onkeyup="searchPhonebook();showTable()" class="form-control" placeholder="عبارت موردنظر را اینجا وارد کنید">
+              <input type="text" id="searchInput" onkeyup="searchPhonebook();showTable();hideImage();" class="form-control" placeholder="عبارت موردنظر را اینجا وارد کنید">
               <br>
               <button type="button" class="btn btn-primary mt-2">جستجو</button>
             </div>
           </form>          
         </div>
         <div class="col-lg-7 mx-auto text-center table-height">
+          <div id="ict-image">
+            <img src="https://s8.uupload.ir/files/ictt_v3zo.jpg" class="image-responsive">
+          </div>
           <table class="table" id="phonebook" style="display: none;">
             <thead class="sahelbold">
               <tr>
@@ -143,37 +141,40 @@ input[type="text"] {
           </table>
         </div>
       </div>
-    </div>
+</div>
     
-    </div>
-  </div>
   <footer class="text-center border-top py-3 mt-5 edition">
 
   </footer>
+
   <script>
-    function searchPhonebook() {
-      var input, filter, table, rows, name, unit, ext, i;
-      input = document.getElementById("searchInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("phonebook");
-      rows = table.getElementsByTagName("tr");
-      for (i = 0; i < rows.length; i++) {
-          name = rows[i].getElementsByTagName("td")[0];
-          unit = rows[i].getElementsByTagName("td")[1];
-          ext = rows[i].getElementsByTagName("td")[2];
-          phone = rows[i].getElementsByTagName("td")[3];
-          if (name || unit || ext) {
-          if (name.innerHTML.indexOf(filter) > -1 || unit.innerHTML.indexOf(filter) > -1 || ext.innerHTML.indexOf(filter) > -1 || phone.innerHTML.indexOf(filter) > -1 ) {
-              rows[i].style.display = "";
-          } else {
-              rows[i].style.display= "none";
-              }
-          }
+function searchPhonebook() {
+  var input, filter, table, rows, name, unit, ext, i;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("phonebook");
+  rows = table.getElementsByTagName("tr");
+  for (i = 0; i < rows.length; i++) {
+      name = rows[i].getElementsByTagName("td")[0];
+      unit = rows[i].getElementsByTagName("td")[1];
+      ext = rows[i].getElementsByTagName("td")[2];
+      phone = rows[i].getElementsByTagName("td")[3];
+      if (name || unit || ext) {
+      if (name.innerHTML.indexOf(filter) > -1 || unit.innerHTML.indexOf(filter) > -1 || ext.innerHTML.indexOf(filter) > -1 || phone.innerHTML.indexOf(filter) > -1 ) {
+          rows[i].style.display = "";
+      } else {
+          rows[i].style.display= "none";
       }
-    }
+      }
+  }
+}
     function showTable() {
       var table = document.getElementById("phonebook");
       table.style.display = "table";
+    }
+    function hideImage(){
+      var image = document.getElementById("ict-image");
+      image.style.display = 'none';
     }
 
     
