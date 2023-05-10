@@ -127,7 +127,10 @@ input[type="text"] {
             <img src="https://s8.uupload.ir/files/ictt_v3zo.jpg" class="image-responsive">
           </div>
           <table class="table" id="phonebook" style="display: none;">
-            <thead class="sahelbold">
+            <div id="not-found" style="display: none;">
+              چنین عضوی وجود ندارد.
+            </div>
+            <thead id='thead' class="sahelbold">
               <tr>
                 <th>واحد</th>
                 <th>سمت</th>
@@ -149,7 +152,7 @@ input[type="text"] {
 
   <script>
     function searchPhonebook() {
-      var input, filter, table, rows, name, unit, ext, phone, i;
+      var input, filter, table, rows, name, unit, ext, phone, i, exsists;
       input = document.getElementById("searchInput");
       filter = input.value.toUpperCase();
       table = document.getElementById("phonebook");
@@ -161,6 +164,7 @@ input[type="text"] {
         phone = rows[i].getElementsByTagName("td")[3];
         if (name || unit || ext || phone) {
           if (filter && (name.innerHTML.indexOf(filter) > -1 || unit.innerHTML.indexOf(filter) > -1 || ext.innerHTML.indexOf(filter) > -1 || phone.innerHTML.indexOf(filter) > -1 )) {
+            exsists = true;
             rows[i].style.display = "";
             name.style.backgroundColor = "";
             unit.style.backgroundColor = "";
@@ -182,6 +186,13 @@ input[type="text"] {
             rows[i].style.display= "none";
           }
         }}
+        if (!exsists){
+          document.getElementById('not-found').style.display = 'block'
+          document.getElementById('thead').style.display = 'none'
+        }
+        else{
+          document.getElementById('not-found').style.display = 'none'
+        }
     }
     function showTable() {
       var table = document.getElementById("phonebook");
