@@ -110,7 +110,7 @@ input[type="text"] {
     <header class="pb-sm-3 mb-4 mt-2 text-center border-bottom">
       <img src="https://i.postimg.cc/k410ttG1/opsim.jpg" alt="opsim-logo" class="hide-lower-height" height="80px">
       <p class="fs-3 mb-2 sahel-font">شرکت اپال پارسیان سنگان</p>
-      <p class="mb-0">دفترچه تلفن شماره های داخلی سایت سنگان</p>
+      <p class="mb-0">جستجوگر شماره های داخلی سایت سنگان، مشهد، تهران و سبزوار</p>
   </header>
       <div class="row">
         <div class="col-lg-4 mx-auto text-center">
@@ -132,7 +132,7 @@ input[type="text"] {
                 <th>واحد</th>
                 <th>سمت</th>
                 <th>نام خانوادگی</th>
-                <th>داخلی</th>
+                <th>شماره داخلی</th>
               </tr>
             </thead>
             <tbody class="target-id">
@@ -148,42 +148,41 @@ input[type="text"] {
   </footer>
 
   <script>
-  function searchPhonebook() {
-    var input, filter, table, rows, name, unit, ext, phone, i;
-    input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("phonebook");
-    rows = table.getElementsByTagName("tr");
-    for (i = 0; i < rows.length; i++) {
-      name = rows[i].getElementsByTagName("td")[0];
-      unit = rows[i].getElementsByTagName("td")[1];
-      ext = rows[i].getElementsByTagName("td")[2];
-      phone = rows[i].getElementsByTagName("td")[3];
-      if (name || unit || ext || phone) {
-        if (name.innerHTML.toUpperCase().indexOf(filter) > -1 || unit.innerHTML.toUpperCase().indexOf(filter) > -1 || ext.innerHTML.toUpperCase().indexOf(filter) > -1 || phone.innerHTML.toUpperCase().indexOf(filter) > -1 ) {
-          rows[i].style.display = "";
-          name.style.backgroundColor = "";
-          unit.style.backgroundColor = "";
-          ext.style.backgroundColor = "";
-          phone.style.backgroundColor = "";
-          if (name.innerHTML.toUpperCase().indexOf(filter) > -1){
-            name.style.backgroundColor = "yellow";
+    function searchPhonebook() {
+      var input, filter, table, rows, name, unit, ext, phone, i;
+      input = document.getElementById("searchInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("phonebook");
+      rows = table.getElementsByTagName("tr");
+      for (i = 0; i < rows.length; i++) {
+        name = rows[i].getElementsByTagName("td")[0];
+        unit = rows[i].getElementsByTagName("td")[1];
+        ext = rows[i].getElementsByTagName("td")[2];
+        phone = rows[i].getElementsByTagName("td")[3];
+        if (name || unit || ext || phone) {
+          if (filter && (name.innerHTML.indexOf(filter) > -1 || unit.innerHTML.indexOf(filter) > -1 || ext.innerHTML.indexOf(filter) > -1 || phone.innerHTML.indexOf(filter) > -1 )) {
+            rows[i].style.display = "";
+            name.style.backgroundColor = "";
+            unit.style.backgroundColor = "";
+            ext.style.backgroundColor = "";
+            phone.style.backgroundColor = "";
+            if (name.innerHTML.indexOf(filter) > -1){
+              name.style.backgroundColor = "yellow";
+            }
+            else if(unit.innerHTML.indexOf(filter) > -1 ){
+              unit.style.backgroundColor = "yellow";
+            }
+            else if(ext.innerHTML.indexOf(filter) > -1){
+              ext.style.backgroundColor = "yellow";
+            }
+            else if(phone.innerHTML.indexOf(filter) > -1 ) {
+              phone.style.backgroundColor = "yellow";
+            }
+          } else {
+            rows[i].style.display= "none";
           }
-          else if(unit.innerHTML.toUpperCase().indexOf(filter) > -1 ){
-            unit.style.backgroundColor = "yellow";
-          }
-          else if(ext.innerHTML.toUpperCase().indexOf(filter) > -1){
-            ext.style.backgroundColor = "yellow";
-          }
-          else if(phone.innerHTML.toUpperCase().indexOf(filter) > -1 ) {
-            phone.style.backgroundColor = "yellow";
-          }
-        } else {
-          rows[i].style.display= "none";
-        }
-      }
+        }}
     }
-  }
     function showTable() {
       var table = document.getElementById("phonebook");
       table.style.display = "table";
