@@ -118,7 +118,7 @@ input[type="text"] {
             <div class="form-group mt-1">
               <input type="text" id="searchInput" onkeyup="searchPhonebook();showTable();hideImage();" class="form-control" placeholder="عبارت موردنظر را اینجا وارد کنید">
               <br>
-              <button type="button" class="btn btn-primary mt-2">جستجو</button>
+              <button type="button" onclick="searchPhonebook();" class="btn btn-primary mt-2">جستجو</button>
             </div>
           </form>          
         </div>
@@ -128,7 +128,7 @@ input[type="text"] {
           </div>
           <table class="table" id="phonebook" style="display: none;">
             <div id="not-found" style="display: none;">
-              چنین عضوی وجود ندارد.
+              جستجو نتیجه ای در بر نداشت! عبارتی شامل یکی از موارد واحد، سمت، نام خانوادگی یا تلفن وارد نمایید.
             </div>
             <thead id='thead' class="sahelbold">
               <tr>
@@ -183,15 +183,30 @@ input[type="text"] {
               phone.style.backgroundColor = "yellow";
             }
           } else {
+            if (!filter){
+              // if input was blank, show all of rows.
+              rows[i].style.display = "";
+              name.style.backgroundColor = "";
+              unit.style.backgroundColor = "";
+              ext.style.backgroundColor = "";
+              phone.style.backgroundColor = "";
+              exsists = true;
+            }
+            else{
+              // if there wasn't match query, display non of the rows.
             rows[i].style.display= "none";
           }
-        }}
+        }}}
         if (!exsists){
+          // show not found message.
           document.getElementById('not-found').style.display = 'block'
           document.getElementById('thead').style.display = 'none'
         }
         else{
+          // hide not found message.
           document.getElementById('not-found').style.display = 'none'
+          document.getElementById('thead').style.display = ''
+
         }
     }
     function showTable() {
